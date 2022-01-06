@@ -21,7 +21,7 @@ router.get("/:id", (req, res, next) => {
     });
 });
 
-router.post("/add", (req, res, next) => {
+router.post("/", (req, res, next) => {
   const {
     name,
     techUsed,
@@ -67,6 +67,16 @@ router.put("/:id", (req, res, next) => {
   )
     .then((editedProject) => {
       res.status(200).json(editedProject);
+    })
+    .catch((err) => {
+      next(err);
+    });
+});
+
+router.delete("/:id", (req, res, next) => {
+  Project.findByIdAndDelete(req.params.id)
+    .then(() => {
+      res.status(200).json({ message: "Project deleted successfully." });
     })
     .catch((err) => {
       next(err);
