@@ -1,9 +1,14 @@
 const Project = require("../models/Project");
-
 const router = require("express").Router();
 
 router.get("/", (req, res, next) => {
-  res.json("All good in here");
+  Project.find()
+    .then((allProjects) => {
+      return res.status(200).json(allProjects);
+    })
+    .catch((err) => {
+      res.json(err);
+    });
 });
 
 router.post("/add", (req, res, next) => {
@@ -33,8 +38,5 @@ router.post("/add", (req, res, next) => {
       res.json(err);
     });
 });
-
-// You put the next routes here 👇
-// example: router.use("/auth", authRoutes)
 
 module.exports = router;
