@@ -49,4 +49,28 @@ router.post("/add", (req, res, next) => {
     });
 });
 
+router.put("/:id", (req, res, next) => {
+  const {
+    name,
+    techUsed,
+    releaseDate,
+    credit,
+    screenshotUrl,
+    videoUrl,
+    details,
+  } = req.body;
+
+  Project.findByIdAndUpdate(
+    req.params.id,
+    { name, techUsed, releaseDate, credit, screenshotUrl, videoUrl, details },
+    { new: true }
+  )
+    .then((editedProject) => {
+      res.status(200).json(editedProject);
+    })
+    .catch((err) => {
+      next(err);
+    });
+});
+
 module.exports = router;
