@@ -7,7 +7,17 @@ router.get("/", (req, res, next) => {
       return res.status(200).json(allProjects);
     })
     .catch((err) => {
-      res.json(err);
+      next(err);
+    });
+});
+
+router.get("/:id", (req, res, next) => {
+  Project.findById(req.params.id)
+    .then((projectFromDB) => {
+      return res.status(200).json(projectFromDB);
+    })
+    .catch((err) => {
+      next(err);
     });
 });
 
@@ -35,7 +45,7 @@ router.post("/add", (req, res, next) => {
       return res.status(200).json(createdProject);
     })
     .catch((err) => {
-      res.json(err);
+      next(err);
     });
 });
 
